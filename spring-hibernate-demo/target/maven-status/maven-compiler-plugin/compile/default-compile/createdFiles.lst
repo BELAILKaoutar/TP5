@@ -1,0 +1,6 @@
+util\HibernateConfig.class
+dao\IDao.class
+metier\ProductDaoImpl.class
+util\TestHibernate.class
+entities\Product.class
+entities\Presentation2.class
