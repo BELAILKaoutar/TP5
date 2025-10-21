@@ -1,16 +1,17 @@
 package entities;
 
-import metier.ProductDaoImpl;
+import dao.IDao;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import util.HibernateConfig;
 
 public class Presentation2 {
     public static void main(String[] args) {
-        try (AnnotationConfigApplicationContext context =
-                     new AnnotationConfigApplicationContext(HibernateConfig.class)) {
+        try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(
+                HibernateConfig.class)) {
 
-            // Spring va récupérer le bean ProductDaoImpl
-            ProductDaoImpl productDao = context.getBean(ProductDaoImpl.class);
+            // On utilise l'interface IDao, Spring trouvera l'implémentation appropriée
+            @SuppressWarnings("unchecked")
+            IDao<Product> productDao = (IDao<Product>) context.getBean(IDao.class);
 
             Product product = new Product();
             product.setName("Produit 1");

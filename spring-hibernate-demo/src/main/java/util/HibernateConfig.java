@@ -12,16 +12,16 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan(basePackages = {"metier"}) // <- ici on indique le package des DAO
+@ComponentScan(basePackages = { "dao", "metier", "entities" }) // Scan all relevant packages
 public class HibernateConfig {
 
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource ds = new DriverManagerDataSource();
         ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        ds.setUrl("jdbc:mysql://localhost:3306/ta_base"); // adapte ici
+        ds.setUrl("jdbc:mysql://localhost:3306/base1"); // Using the correct database name
         ds.setUsername("root");
-        ds.setPassword("root");
+        ds.setPassword("");
         return ds;
     }
 
