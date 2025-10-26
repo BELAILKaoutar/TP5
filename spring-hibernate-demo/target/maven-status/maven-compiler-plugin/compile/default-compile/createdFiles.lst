@@ -1,6 +1,11 @@
+config\WebConfig.class
 util\HibernateConfig.class
+entities\Category.class
+SpringHibernateDemoApplication.class
+util\TestHibernate.class
+controller\ProductController.class
+controller\package-info.class
 dao\IDao.class
 metier\ProductDaoImpl.class
-util\TestHibernate.class
 entities\Product.class
 entities\Presentation2.class

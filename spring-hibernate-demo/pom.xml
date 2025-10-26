@@ -10,17 +10,20 @@
   <groupId>com.example</groupId>
   <artifactId>spring-hibernate-demo</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>spring-hibernate-demo</name>
+  <packaging>war</packaging>
 
   <properties>
-    <!-- Adapte la version de Java si nécessaire (11, 17, 21, ...) -->
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
+    <!-- Java 21 LTS -->
+    <maven.compiler.source>21</maven.compiler.source>
+    <maven.compiler.target>21</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <!-- Versions des dépendances -->
-    <spring.version>5.3.22</spring.version>
-    <hibernate.version>5.6.12.Final</hibernate.version>
-    <mysql.connector.version>8.0.29</mysql.connector.version>
+    <!-- Latest stable versions compatible with Java 21 -->
+    <spring.version>6.1.1</spring.version>
+    <hibernate.version>6.3.1.Final</hibernate.version>
+    <mysql.connector.version>8.2.0</mysql.connector.version>
+    <jakarta.servlet.version>6.0.0</jakarta.servlet.version>
+    <jakarta.validation.version>3.0.2</jakarta.validation.version>
   </properties>
 
   <dependencies>
@@ -46,10 +49,11 @@
     </dependency>
 
     <!-- MySQL Connector pour la connexion à la base de données -->
+    <!-- MySQL Connector pour la connexion à la base de données -->
     <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <version>${mysql.connector.version}</version>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>8.0.33</version>
     </dependency>
 
     <!-- Spring Transaction pour la gestion automatique des transactions -->
@@ -59,32 +63,61 @@
       <version>${spring.version}</version>
     </dependency>
 
-    <!-- Validation API pour les annotations JPA -->
+    <!-- Spring MVC -->
     <dependency>
-      <groupId>javax.validation</groupId>
-      <artifactId>validation-api</artifactId>
-      <version>2.0.1.Final</version>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-webmvc</artifactId>
+        <version>${spring.version}</version>
     </dependency>
 
-    <!-- (optionnel) Hibernate Validator si tu veux la validation runtime -->
+    <!-- Jakarta Servlet API -->
     <dependency>
-      <groupId>org.hibernate.validator</groupId>
-      <artifactId>hibernate-validator</artifactId>
-      <version>6.2.5.Final</version>
+        <groupId>jakarta.servlet</groupId>
+        <artifactId>jakarta.servlet-api</artifactId>
+        <version>${jakarta.servlet.version}</version>
+        <scope>provided</scope>
     </dependency>
 
-    <!-- (optionnel) slf4j pour logging si pas déjà présent -->
+    <!-- Jakarta Validation API -->
     <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-      <version>1.7.36</version>
+        <groupId>jakarta.validation</groupId>
+        <artifactId>jakarta.validation-api</artifactId>
+        <version>${jakarta.validation.version}</version>
+    </dependency>
+
+    <!-- Hibernate Validator -->
+    <dependency>
+        <groupId>org.hibernate.validator</groupId>
+        <artifactId>hibernate-validator</artifactId>
+        <version>8.0.1.Final</version>
+    </dependency>
+
+    <!-- Logging -->
+    <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>2.0.9</version>
     </dependency>
     <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-simple</artifactId>
-      <version>1.7.36</version>
-      <scope>runtime</scope>
+        <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-classic</artifactId>
+        <version>1.4.11</version>
+        <scope>runtime</scope>
     </dependency>
+
+    <!-- Jakarta JSTL -->
+    <dependency>
+        <groupId>jakarta.servlet.jsp.jstl</groupId>
+        <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+        <version>3.0.0</version>
+    </dependency>
+    <dependency>
+        <groupId>org.glassfish.web</groupId>
+        <artifactId>jakarta.servlet.jsp.jstl</artifactId>
+        <version>3.0.1</version>
+    </dependency>
+
+
   </dependencies>
 
   <build>
@@ -97,6 +130,25 @@
         <configuration>
           <source>${maven.compiler.source}</source>
           <target>${maven.compiler.target}</target>
+        </configuration>  
+      </plugin>
+      
+      <!-- War Plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>3.4.0</version>
+      </plugin>
+
+      <!-- Tomcat Plugin -->
+      <plugin>
+        <groupId>org.apache.tomcat.maven</groupId>
+        <artifactId>tomcat7-maven-plugin</artifactId>
+        <version>2.2</version>
+        <configuration>
+          <port>8080</port>
+          <path>/spring-hibernate-demo</path>
+          <update>true</update>
         </configuration>
       </plugin>
     </plugins>

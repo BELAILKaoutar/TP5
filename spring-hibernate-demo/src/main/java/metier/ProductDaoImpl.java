@@ -17,31 +17,35 @@ public class ProductDaoImpl implements IDao<Product> {
     @Override
     @Transactional
     public boolean create(Product product) {
-        sessionFactory.getCurrentSession().save(product);
+        sessionFactory.getCurrentSession().persist(product);
         return true;
     }
 
     @Override
+    @Transactional
     public boolean delete(Product product) {
-        sessionFactory.getCurrentSession().delete(product);
+        sessionFactory.getCurrentSession().remove(product);
         return true;
     }
 
     @Override
+    @Transactional
     public boolean update(Product product) {
-        sessionFactory.getCurrentSession().update(product);
+        sessionFactory.getCurrentSession().merge(product);
         return true;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Product findById(int id) {
         return sessionFactory.getCurrentSession().get(Product.class, id);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Product> findAll() {
         return sessionFactory.getCurrentSession()
-                             .createQuery("from Product", Product.class)
-                             .list();
+                .createSelectionQuery("from Product", Product.class)
+                .getResultList();
     }
 }
